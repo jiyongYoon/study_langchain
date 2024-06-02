@@ -22,3 +22,16 @@ llm = ChatOpenAI(
 question = "lang chain을 공부하려고 하는데, lang chain은 무엇입니까??"
 
 print(f"[답변]: {llm.invoke(question)}")
+
+
+
+from langchain.prompts import PromptTemplate
+
+
+template = "{country}의 수도는 어디인가요?"
+
+prompt_template = PromptTemplate.from_template(template)
+print(prompt_template)
+
+prompt = prompt_template.format(country="대한민국")
+print(prompt)
