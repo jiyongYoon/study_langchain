@@ -4,7 +4,7 @@ import study_english_prompt_template
 
 prompt = study_english_prompt_template.generate_prompt_template()
 model = openai_chatgpt_llm.generate_llm()
-output_parser = study_english_output_parser.output_parser()
+output_parser = output_parser.output_parser()
 
 chain = prompt | model | output_parser
 
