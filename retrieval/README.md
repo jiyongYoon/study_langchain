@@ -23,3 +23,13 @@
 ### Document Loaders
 
 - `Page_content`(문서의 내용) + `Metadata`(문서의 위치, 제목, 페이지 넘버 등) 의 두 가지 구성요소로 문서를 불러올 수 있음
+
+### Text Splitters
+
+<img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/a31753a3-4674-4966-a646-3a2f81894a96" width="100%"/>
+
+- 토큰 제한이 있는 LLM이 여러 문장을 참고해 답변할 수 있도록 문서를 분할하는 역할을 함
+- 문서 자체를 글 덩어리(Chunk)로 자르고, 이를 Vector store에 저장한다.
+  - 글 덩어리(Chunk) 하나 당 Vector 하나가 배치된다.
+- 대부분의 경우 RecursiveCharacterTextSplitter를 통해 분할
+  - 줄바꿈, 마침표, 쉼표 순으로 재귀적으로 분할하므로 max_token을 지켜서 분할하게 됨
