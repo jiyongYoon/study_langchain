@@ -33,3 +33,18 @@
   - 글 덩어리(Chunk) 하나 당 Vector 하나가 배치된다.
 - 대부분의 경우 RecursiveCharacterTextSplitter를 통해 분할
   - 줄바꿈, 마침표, 쉼표 순으로 재귀적으로 분할하므로 max_token을 지켜서 분할하게 됨
+
+### Vector Embeddings (Text Embeddings)
+
+- 텍스트를 숫자로 변환하여 문장 간의 유사성을 비교할 수 있도록 함
+- 임베딩 모델은 분할된 문서를 하나의 Vector Embedding으로 옮기는 역할을 함
+- 즉, 답변의 기반이 되는 Documents를 Embedding Vector화 하고, 사용자 질문을 Embedding Vector화 하여 유사성을 비교하여 정답을 찾는 것이 임베딩 모델의 역할이며, 이 모델이 답변의 성능을 크게 좌우하게 된다.
+  - 보통 우리의 말은 비정형데이터이다. 어떤 좌표에 나타낼 수 없는데, 이를 임베딩하면 좌표에 나타낼 수 있게 되며, 이를 통해 유사성을 계산할 수 있게 된다.
+
+> 임베딩이란?
+> 자연어처리에서 사람이 쓰는 자연어를 기계가 이해할 수 있도록 숫자형태인 vector로 바꾸는 과정 혹은 일련의 전체 과정
+
+- 우리는 보통 임베딩 모델을 대용량의 말뭉치로 훈련이 되어있는 것(`Pre-trained Embedding Model`)을 가져다 쓰게 된다.
+
+<img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/f1e0e8da-eb43-4617-a61c-7e7c160f1367" width="700%"/>
+
