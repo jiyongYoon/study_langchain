@@ -48,3 +48,14 @@
 
 <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/f1e0e8da-eb43-4617-a61c-7e7c160f1367" width="700%"/>
 
+### Vector stores
+
+- 임베딩 된 데이터를 저장하는 저장소
+- Pure vector databases
+  - 벡터 데이터만 저장 가능
+  - ex) Pinecone, qdrant, chroma(오픈소스), Milvus 등... 
+- Vector libraries
+  - 벡터 유사도를 계산하는 것에 특화된 툴
+  - ex) FAISS 등...
+- 기본적으로 VectorStore는 벡터를 일시적으로 저장함. 텍스트와 임베딩 함수를 지정하여 from_documents() 함수에 보내면, 지정된 임베딩 함수를 통해 텍스트를 벡터로 변환하고, 이를 임시 db로 생성함.
+- 그리고 similarity_search() 함수에 쿼리를 지정해주면 이를 바탕으로 가장 벡터 유사도가 높은 벡터를 찾고 이를 자연어 형태로 출력함.
