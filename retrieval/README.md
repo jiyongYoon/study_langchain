@@ -59,3 +59,40 @@
   - ex) FAISS 등...
 - 기본적으로 VectorStore는 벡터를 일시적으로 저장함. 텍스트와 임베딩 함수를 지정하여 from_documents() 함수에 보내면, 지정된 임베딩 함수를 통해 텍스트를 벡터로 변환하고, 이를 임시 db로 생성함.
 - 그리고 similarity_search() 함수에 쿼리를 지정해주면 이를 바탕으로 가장 벡터 유사도가 높은 벡터를 찾고 이를 자연어 형태로 출력함.
+
+### Retrievers
+
+- 비정형 쿼리가 주어지면 문서를 반환하는 인터페이스
+- 사용자의 질문을 임베딩 모델을 통해 임베딩한 후, 벡터 저장소에 있는 데이터들과 비교한 후 가장 유사성 있는 데이터들을 뽑아서 컨텍스트로 넘기고 사용자의 질문과 함께 프롬프트로 엮어서 LLM에게 넘겨주는 일련의 과정을 진행하게 됨
+- Chain
+  1. `Stuff documents`
+
+      <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/2aaafafc-d947-4bb4-95f5-7bd0766539a8" width="100%"/>
+     
+     - 가장 간단한 타입의 체인이며, 질문은 A이고 Context는 B라는 것을 그대로 LLM에게 넘겨주는 형태
+     - LLM에게 던져주는 참고하라는 분할 된 텍스트 청크를 Context에 그대로 주입하는데, 토큰 이슈가 발생할 수 있어 주의를 요함
+     
+  2. `Map reduce documents chain`
+  
+      <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/f2121113-1130-4d7e-b952-1fed7c0ea289" width="100%"/>
+  
+     - Chunk 하나하나를 요약하여 `Map`을 만든 후(병렬적으로 처리할 수 있음), `Map`을 참고하여 한번 더 요약을 진행하여 결과물을 만들어내는 형태
+     - 요약 작업 수행이 필요하므로 결과물을 얻기 위해 다수의 호출이 필요하기 때문에 속도가 느림
+     
+  3. `Refine documents chain`
+  
+      <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/9eb90d62-d0b9-49c1-8d40-f7f004c0fd68" width="100%"/>
+  
+     - Chunk를 하나하나씩 돌면서 중간 결과물을 계속 다음 답변에 반영하는 형태
+     - 좋은 품질의 결과물을 얻을 수 있으나, `Map reduce document chain` 처럼 병렬적으로 처리하지도 않기 때문에 시간이 매우 오래걸림
+  4. `Map re-rank documents chain`
+  
+      <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/f012b198-7e99-444f-998f-00cabab80128" width="100%"/>
+  
+     - 사용자의 질문과 Chunk 하나씩을 프롬프트에 넣고 LLM의 답변을 받는데, 이 때 점수까지 함께 받아서 그 중 점수가 가장 높은 답변을 리턴하는 형태
+     - Chunk를 순회하면서 누적답변을 생성하여 그중 가장 유사성이 높은 답변을 선별하기 때문에 품질이 뛰어나지만 시간이 오래걸림
+
+
+
+
+### 참고 유튜브 채널: [모두의AI 유튜브](https://www.youtube.com/@AI-km1yn)
