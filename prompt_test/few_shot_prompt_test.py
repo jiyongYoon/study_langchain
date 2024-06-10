@@ -39,7 +39,7 @@ prompt = FewShotPromptTemplate(
 print(prompt.format(input="호날두로 삼행시 만들어줘"))
 
 
-from llm import openai_chatgpt_llm
+from gpt_llm import openai_chatgpt_llm
 
 
 model = openai_chatgpt_llm.generate_llm_streaming_ver()

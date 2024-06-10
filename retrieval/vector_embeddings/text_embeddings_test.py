@@ -1,4 +1,4 @@
-from llm import openai_embeddings_model
+from gpt_llm import openai_embeddings_model
 
 embeddings_model = openai_embeddings_model.generate_embedding_model()
 

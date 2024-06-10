@@ -17,7 +17,7 @@ input_schema = {
 print_schema(input_schema)
 
 ###########################################
-from llm import openai_chatgpt_llm
+from gpt_llm import openai_chatgpt_llm
 from langchain.prompts import ChatPromptTemplate
 
 

@@ -1,6 +1,6 @@
 from langchain.output_parsers import CommaSeparatedListOutputParser
 from langchain.prompts import PromptTemplate, ChatPromptTemplate, HumanMessagePromptTemplate
-from llm import openai_chatgpt_llm
+from gpt_llm import openai_chatgpt_llm
 from langchain.llms import OpenAI
 from dotenv import load_dotenv
 import os

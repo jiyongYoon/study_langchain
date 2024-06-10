@@ -1,4 +1,4 @@
-from llm import openai_chatgpt_llm
+from gpt_llm import openai_chatgpt_llm
 
 model = openai_chatgpt_llm.generate_llm_streaming_ver()
 

@@ -1,4 +1,4 @@
-from llm import openai_chatgpt_llm, output_parser
+from gpt_llm import openai_chatgpt_llm, output_parser
 import study_english_prompt_template
 
 

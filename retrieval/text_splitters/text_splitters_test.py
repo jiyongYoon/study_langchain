@@ -1,6 +1,7 @@
 import os
 
-project_directory = 'D:\dev_yoon\py\study_langchain'
+# project_directory = 'D:\dev_yoon\py\study_langchain'
+project_directory = os.environ['PROJECT_DIRECTORY']
 filename = 'lorem.txt'
 filepath = os.path.join(project_directory, filename)
 
