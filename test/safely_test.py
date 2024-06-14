@@ -28,6 +28,7 @@ print("############## 단어 임베딩 ##############")
 # for i in range(len(embed_documents)):
 #     print("%d번 문서(단어) 임베딩 내용: %s" % (i + 1, embed_documents[i]))
 
+collection_name = "company_id_1"
 
 print("############## 벡터 저장소 저장 ##############")
 from langchain_community.vectorstores import Chroma
@@ -36,6 +37,7 @@ from langchain_community.vectorstores import Chroma
 #     text,
 #     embedding_model,
 #     persist_directory="./chroma_db",
+#     collection_name=collection_name,
 # )
 # print(db)
 
@@ -50,7 +52,8 @@ print("임베딩된 쿼리의 차원: %d" % len(query))
 print("############## 벡터 저장소에서 데이터 꺼내기 ##############")
 find_db = Chroma(
     persist_directory="./chroma_db",
-    embedding_function=embedding_model
+    embedding_function=embedding_model,
+    collection_name=collection_name,
 )
 
 print("############## 유사도 확인 ##############")
@@ -79,5 +82,12 @@ qa = RetrievalQA.from_chain_type(
 )
 
 query = "검색 대상 중에 '산업안전 경영목표'라는 단어가 있는지 확인해줘"
-result = qa.invoke({"query": query})
-print(result)
+result1 = qa.invoke({"query": query})
+print("Q: " + query)
+print(result1)
+
+query2 = "검색 대상 중에 '작업 일지'라는 단어가 있는지 확인해줘"
+result2 = qa.invoke({"query": query2})
+print("Q: " + query2)
+print(result2)
+
