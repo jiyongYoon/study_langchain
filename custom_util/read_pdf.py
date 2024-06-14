@@ -2,6 +2,7 @@
 import os
 import pdfplumber
 import re
+from dotenv import load_dotenv
 
 
 def remove_special_characters(text):
@@ -10,6 +11,7 @@ def remove_special_characters(text):
 
 
 def read_pdf_to_clean_text(pdf_filename):
+    load_dotenv()
     # project_directory = 'D:\\dev_yoon\\py\\study_langchain'
     project_directory = os.environ['PROJECT_DIRECTORY']
     pdf_filepath = os.path.join(project_directory, pdf_filename)
