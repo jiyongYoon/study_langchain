@@ -4,37 +4,44 @@
 - 외부 데이터를 참조하여 LLM이 답변할 수 있도록 해주는 프레임워크
 
 ## RAG의 구조
+
+  <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/8f9dbdb6-9d82-44af-8ea9-3ff09cb5ac02" width="100%"/>
+
   1. 유저가 질문을 하면 
   2. 외부 데이터 저장소(Vector DB, Featre Store 등)에서 사용자의 질문과 유사 문장을 검색하고
-  3. Q/A 시스템이 유사문장을 포함한 질문을 LLM에게 프롬프트로 전달한 후
+  3. Q/A 시스템이 유사문장을 포함한 질문을 LLM에게 프롬프트와 함께 전달한 후
   4. 답변을 받는 형태로 이루어진다.
+
 
 ## Langchain Retreval
 
 - RAG 대부분의 구성요소를 아우르는 말
 - 구성요소 하나하나가 RAG의 품질을 좌우함
 
-### Retrieval의 구성요소
+## Retrieval의 구성요소
 - Document Loaders: 문서를 불러오는 역할
 - Text Splitters: 문서 텍스트를 분할
 - Vector Embeddings: 임베딩 모델을 거쳐 수치화된 데이터들을 벡터 저장소에 저장
 - Retrievers: 사용자의 질문과 벡터 저장소에서 가장 유사한 문장을 추출하여 Langchain의 Chain을 통해 LLM의 답변을 생성
 
-### Document Loaders
+### 1. Document Loaders
 
 - `Page_content`(문서의 내용) + `Metadata`(문서의 위치, 제목, 페이지 넘버 등) 의 두 가지 구성요소로 문서를 불러올 수 있음
+- Web, Pdf, Json, Filesystem, Images, Docs 등 여러가지 Loader들이 있고, 이를 인터페이스화 해놓음
 
-### Text Splitters
+### 2. Text Splitters
 
 <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/a31753a3-4674-4966-a646-3a2f81894a96" width="100%"/>
 
+- 글 덩어리(Chunk)를 만드는 역할
 - 토큰 제한이 있는 LLM이 여러 문장을 참고해 답변할 수 있도록 문서를 분할하는 역할을 함
-- 문서 자체를 글 덩어리(Chunk)로 자르고, 이를 Vector store에 저장한다.
+- 문서 자체를 글 덩어리(Chunk)로 잘라야, 이를 Vector store에 저장하기 좋다.
   - 글 덩어리(Chunk) 하나 당 Vector 하나가 배치된다.
 - 대부분의 경우 RecursiveCharacterTextSplitter를 통해 분할
   - 줄바꿈, 마침표, 쉼표 순으로 재귀적으로 분할하므로 max_token을 지켜서 분할하게 됨
+- 문서마다 성격이 다르기 때문에 내용의 유사도만큼 쪼갤 수 있으면 그렇게 할 수록 답변 품질이 좋아짐!!
 
-### Vector Embeddings (Text Embeddings)
+### 3. Vector Embeddings (Text Embeddings)
 
 - 텍스트를 숫자로 변환하여 문장 간의 유사성을 비교할 수 있도록 함
 - 임베딩 모델은 분할된 문서를 하나의 Vector Embedding으로 옮기는 역할을 함
@@ -48,7 +55,7 @@
 
 <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/f1e0e8da-eb43-4617-a61c-7e7c160f1367" width="700%"/>
 
-### Vector stores
+### 4. Vector stores
 
 - 임베딩 된 데이터를 저장하는 저장소
 - Pure vector databases
@@ -60,7 +67,7 @@
 - 기본적으로 VectorStore는 벡터를 일시적으로 저장함. 텍스트와 임베딩 함수를 지정하여 from_documents() 함수에 보내면, 지정된 임베딩 함수를 통해 텍스트를 벡터로 변환하고, 이를 임시 db로 생성함.
 - 그리고 similarity_search() 함수에 쿼리를 지정해주면 이를 바탕으로 가장 벡터 유사도가 높은 벡터를 찾고 이를 자연어 형태로 출력함.
 
-### Retrievers
+### 5. Retrievers
 
 - 비정형 쿼리가 주어지면 문서를 반환하는 인터페이스
 - 사용자의 질문을 임베딩 모델을 통해 임베딩한 후, 벡터 저장소에 있는 데이터들과 비교한 후 가장 유사성 있는 데이터들을 뽑아서 컨텍스트로 넘기고 사용자의 질문과 함께 프롬프트로 엮어서 LLM에게 넘겨주는 일련의 과정을 진행하게 됨
@@ -92,7 +99,29 @@
      - 사용자의 질문과 Chunk 하나씩을 프롬프트에 넣고 LLM의 답변을 받는데, 이 때 점수까지 함께 받아서 그 중 점수가 가장 높은 답변을 리턴하는 형태
      - Chunk를 순회하면서 누적답변을 생성하여 그중 가장 유사성이 높은 답변을 선별하기 때문에 품질이 뛰어나지만 시간이 오래걸림
 
+### 6. Prompt
 
+- LLM에게 질문할 방식을 설정하는 것
+- LangSmith Hub에서 Prompt를 가져다가 쓰면 좋음!!
+- [LangSmith Hub Quickstart](https://docs.smith.langchain.com/old/hub/quickstart)
 
+> LangSmith?
+> 
+> LangChain EcoSystem 구성요소 중 하나로, RAG Chain을 디버깅(추적 및 평가)하도록 도와주는 툴 <br>
+> `.env` 파일에 변수를 추가해서 로드하면 바로 사용이 가능하다
+> ```
+> LANGCHAIN_TRACING_V2=true
+> LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
+> LANGCHAIN_API_KEY="<your-api-key>"
+> ```
+> 링크: [랭스미스](https://python.langchain.com/v0.1/docs/langsmith/)
 
-### 참고 유튜브 채널: [모두의AI 유튜브](https://www.youtube.com/@AI-km1yn)
+### 7. LLM Answer
+
+- 실제 제공된 데이터를 기반으로 답변을 생성하는 모델
+- 답변을 Output Parser를 통해 구조화 할 수 있음
+
+---
+### 참고 유튜브 채널: 
+- [모두의AI 유튜브](https://www.youtube.com/@AI-km1yn)
+- [테디노트](https://youtu.be/1scMJH93v0M?si=fVHZFkuk72lHZ1na)
