@@ -1,4 +1,4 @@
-# RAG (Retrieval Augmented Generation)
+# 1. RAG (Retrieval Augmented Generation)
 
 - 검색 증강 생성
 - 외부 데이터를 참조하여 LLM이 답변할 수 있도록 해주는 프레임워크
@@ -120,6 +120,28 @@
 
 - 실제 제공된 데이터를 기반으로 답변을 생성하는 모델
 - 답변을 Output Parser를 통해 구조화 할 수 있음
+
+# 2. RAG 고도화
+
+<img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/e87944da-9d72-4dce-93f4-a7c93adb7a89" width="50%"/>
+
+- 사용자 질문의 의도를 파악하여 고품질 답변을 내놓아야 하는데, 사용자 질문과 유사한 정보를 얼마나 잘 뽑아내서 LLM에게 전달해줄 수 있는지가 굉장히 중요하다.
+
+## 프롬프트 엔지니어링을 하지 않아도 잘 답변을 받기 원하는 경우 -> `Multi-query`
+
+- 질문을 잘 알아듣도록 사용자 질문을 여러개의 유사 질문으로 재생성하여 사용함
+
+  <img src="https://github.com/jiyongYoon/study_langchain/assets/98104603/bd6b5a9a-c3a2-4e21-b000-59728f873e4a" width="100%"/>
+
+## 참고 문서에 담기는 문맥의 퀄리티를 높이고 싶은 경우 -> `Parent-Document `
+
+## 시멘틱 검색 말고 쿼리를 필요로 하는 경우 -> `Self-Querying`
+
+- 사용자가 시멘틱 검색, 즉 질문을 조금만 바꾸어도 답변 일관성이 흔들리는 경우가 많음
+- 사용자가 어떤 데이터를 필요로 하는 경우, 어떻게 답변 퀄리티를 잘 뽑아내는지 고민이 필요함
+
+## 오래된 자료의 참고를 낮추고 싶은 경우 (ex, 최근 문서를 더 많이 참고하길 원하는 경우) -> `Time-weighted`
+
 
 ---
 ### 참고 유튜브 채널: 
