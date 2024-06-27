@@ -56,6 +56,23 @@ find_db = Chroma(
     collection_name=collection_name,
 )
 
+print(find_db._collection.name)
+
+def get_all_documents(chroma_instance, collection_name):
+    collection = chroma_instance._client.get_collection(collection_name)
+    documents = collection.get()
+    return documents
+
+# Get all documents from the collection
+documents = get_all_documents(find_db, collection_name)
+print(documents)
+# all_ids = [doc['id'] for doc in documents['documents']]
+all_ids = documents['ids']
+print(all_ids)
+
+find_db.delete(ids=all_ids, collection_name=collection_name)
+find_db.delete_collection()
+
 print("############## 유사도 확인 ##############")
 relevance_scores = find_db.similarity_search_with_relevance_scores(question, k=len(find_db))
 

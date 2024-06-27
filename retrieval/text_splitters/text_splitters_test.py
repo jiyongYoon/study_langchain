@@ -1,6 +1,8 @@
+import dotenv
 import os
 
 # project_directory = 'D:\dev_yoon\py\study_langchain'
+dotenv.load_dotenv()
 project_directory = os.environ['PROJECT_DIRECTORY']
 filename = 'lorem.txt'
 filepath = os.path.join(project_directory, filename)
@@ -64,6 +66,8 @@ print(python_docs[1])
 page_content='# Call the function\nhello_world()'
 """
 
+print("-"*100)
+print("-"*100)
 
 ### 토큰 단위 텍스트 분할기
 ### 결국 LLM api들은 토큰 단위로 설정이 되다보니, 이렇게 분할하는 것이 가장 일반적이여진다.
@@ -77,6 +81,7 @@ def tiktoken_len(text):
 print(tiktoken_len(texts[1]))
 
 
+
 ### 새롭게 text_splitter 선언
 text_splitter2 = RecursiveCharacterTextSplitter(
     # Set a really small chunk size, just to show.
@@ -85,14 +90,22 @@ text_splitter2 = RecursiveCharacterTextSplitter(
     length_function=tiktoken_len, # tiktoken_len을 사용
 )
 
-tiktoken_texts = text_splitter2.split_documents(lorem_txt)
+from langchain.schema import Document
+
+lorem_doc = [Document(page_content=lorem_txt)]
+
+tiktoken_texts = text_splitter2.split_documents(lorem_doc)
 print(tiktoken_texts[0])
 print("-"*100)
 print(tiktoken_texts[1])
 print("-"*100)
 print(tiktoken_texts[2])
 
+print("-"*100)
+print("-"*100)
+print(len(tiktoken_texts))
+
 token_list = []
 for i in range(len(tiktoken_texts)):
-    token_list.append(tiktoken_len(tiktoken_texts[i]))
+    token_list.append(tiktoken_len(tiktoken_texts[i].page_content))
 print(token_list)

@@ -22,7 +22,7 @@ print(
 embedded_query_q = embeddings_model.embed_query("이 대화에서 언급된 이름은 무엇입니까?")
 embedded_query_a = embeddings_model.embed_query("이 대화에서 언급된 이름은 홍길동입니다.")
 print(len(embedded_query_q), len(embedded_query_a))
-
+"""1536 1536"""
 
 from numpy import dot
 from numpy.linalg import norm
